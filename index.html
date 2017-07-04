@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Project Connect</title>
+    <script src="https://mapzen.com/tangram/tangram.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+    <style>
+       body {
+           margin: 0px;
+           border: 0px;
+           padding: 0px;
+       }
+       #map {
+           height: 100%;
+           width: 100%;
+           position: absolute;
+       }
+			 
+   </style>
+
+
+  </head>
+  <body>
+    <div id='map'></div>
+    <script>
+      var map = L.map('map',{
+        center:[16.149561821734807,-11.633205882131197],
+        zoom: 8
+      });
+
+      var layer = Tangram.leafletLayer({
+        scene: 'scene.yaml'
+      );
+
+      onMapClick= ()=>
+        alert('here')
+
+      map.on('tangramloaded',function(e){
+        var tangramLayer = e.tangramLayer;
+          scene = tangramLayer.scene;
+
+          tangramLayer.setSelectionEvents({
+            click: onMapClick
+          });
+      )
+
+
+
+      layer.addTo(map)
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+global:
+  sdk_mapzen_api_key: mapzen-tDHBHDp
+
+import: https://mapzen.com/carto/walkabout-style-more-labels/5/walkabout-style-more-labels.zip
+
+sources:
+  schools:
+    type: GeoJSON
+    url: data/pc_schools.geojson
+  towers:
+    type: GeoJSON
+    url: data/pc_towers.geojson
+  connections:
+    type: GeoJSON
+    url: data/pc_connections.geojson
+
+layers:
+  schools:
+    data: { source: schools }
+    draw:
+      points:
+        interactive: True
+        color: |
+          function(){ return {'2G': '#DCD188','3G':'#488041','No Service':'#A6D0ED'}[feature['Type of Service']] }
+        size: 10
+        collide : False
+
+  towers:
+    data: {source: towers}
+    draw:
+      points:
+        size: 5
+        color: 'red'
+        collide: False
+
+  connections:
+    data: {source: connections }
+    draw:
+      lines:
+        color: red
+        order: 1000
+        width: 10
+
+  schoolLabels:
+    data: {source: schools}
+    filter: { $zoom:{min: 12, max: 18 }}
+    draw:
+      text:
+        anchor: center
+        priority: 2
+        offset: [0px,-10px]
+        font:
+          family: 
+          fill: gray 
+          style: bold
+          size: 13px
+        text_source: |
+          function() {
+            console.log(feature['Name of the school'])
+            return feature['Name of the school']
+          }
